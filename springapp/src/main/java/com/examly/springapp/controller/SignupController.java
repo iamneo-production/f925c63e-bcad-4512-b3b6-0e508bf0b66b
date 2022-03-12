@@ -16,7 +16,7 @@ public class SignupController {
   @Autowired private UserRepository userRepository;
   @PostMapping("/signup")
   public ResponseEntity<?> saveCustomer(@RequestBody User user)
-      throws Exception {
+      throws Throwable {
     if (userRepository.existsByEmail(user.getEmail())) {
       throw new Exception("User Already Exits");
     }

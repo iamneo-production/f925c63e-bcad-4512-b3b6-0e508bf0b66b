@@ -20,16 +20,15 @@ public class RouteController {
   @Autowired private RouteService routeService;
   @GetMapping({"/admin/routes", "/route"})
   public ResponseEntity<?> getRoute() {
-    return new ResponseEntity<List<Route>>(routeService.getRoute(),
-                                           HttpStatus.OK);
+    return new ResponseEntity<>(routeService.getRoute(), HttpStatus.OK);
   }
 
   @GetMapping("/route/{id}")
   public ResponseEntity<?> getRouteById(@PathVariable int id) {
     try {
       Route r = routeService.getRouteById(id);
-      return new ResponseEntity<Object>(r, HttpStatus.OK);
-    } catch (Exception e) {
+      return new ResponseEntity<>(r, HttpStatus.OK);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -38,9 +37,9 @@ public class RouteController {
   public ResponseEntity<?> deleteRoute(@PathVariable int id) {
     try {
       routeService.deleteRoute(id);
-      return new ResponseEntity<Object>("Route Deleted Successfully",
-                                        HttpStatus.CREATED);
-    } catch (Exception e) {
+      return new ResponseEntity<>("Route Deleted Successfully",
+                                  HttpStatus.CREATED);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -49,9 +48,9 @@ public class RouteController {
   public ResponseEntity<?> ediRoute(@RequestBody Route route) {
     try {
       routeService.ediRoute(route);
-      return new ResponseEntity<Object>("route edited Successfully",
-                                        HttpStatus.CREATED);
-    } catch (Exception e) {
+      return new ResponseEntity<>("route edited Successfully",
+                                  HttpStatus.CREATED);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -60,9 +59,9 @@ public class RouteController {
   public ResponseEntity<?> saveRoute(@RequestBody Route route) {
     try {
       routeService.saveRoute(route);
-      return new ResponseEntity<Object>("Route saved Successfully",
-                                        HttpStatus.CREATED);
-    } catch (Exception e) {
+      return new ResponseEntity<>("Route saved Successfully",
+                                  HttpStatus.CREATED);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }

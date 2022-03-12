@@ -14,7 +14,7 @@ public class EmployeeService {
   public List<Employee> getEmployee() {
     Iterable<Employee> employees = employeeRepository.findAll();
 
-    List<Employee> listEmployee = new ArrayList<Employee>();
+    List<Employee> listEmployee = new ArrayList<>();
 
     employees.forEach(listEmployee::add);
 
@@ -25,21 +25,21 @@ public class EmployeeService {
     return employeeRepository.findById(id).get();
   }
 
-  public void editEmployee(Employee employee) throws Exception {
+  public void editEmployee(Employee employee) throws Throwable {
     if (!employeeRepository.existsById(employee.id)) {
       throw new Exception("Not Found");
     }
     employeeRepository.save(employee);
   }
 
-  public void saveEmployee(Employee employee) throws Exception {
+  public void saveEmployee(Employee employee) throws Throwable {
     if (employeeRepository.existsById(employee.id)) {
       throw new Exception("User Already Exists");
     }
     employeeRepository.save(employee);
   }
 
-  public void deleteEmployee(int id) throws Exception {
+  public void deleteEmployee(int id) throws Throwable {
     if (!employeeRepository.existsById(id))
       throw new Exception("Employee doesn't exits");
     employeeRepository.deleteById(id);

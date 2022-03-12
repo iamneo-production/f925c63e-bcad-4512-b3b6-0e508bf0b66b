@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class JwtUtil {
 
-  private String SECRET_KEY = "secret";
+  private String secretkey = "secret";
 
   public String extractEmail(String token) {
     return extractClaim(token, Claims::getSubject);
@@ -29,7 +29,7 @@ public class JwtUtil {
   }
   private Claims extractAllClaims(String token) {
     return Jwts.parser()
-        .setSigningKey(SECRET_KEY)
+        .setSigningKey(secretkey)
         .parseClaimsJws(token)
         .getBody();
   }
@@ -51,7 +51,7 @@ public class JwtUtil {
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(
             new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-        .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+        .signWith(SignatureAlgorithm.HS256, secretkey)
         .compact();
   }
 

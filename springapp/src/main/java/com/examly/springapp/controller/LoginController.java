@@ -36,7 +36,7 @@ public class LoginController {
 
       String jwt = jwtUtil.generateToken(myUserDetails);
 
-      return new ResponseEntity<Object>(new LoginResponse(jwt), HttpStatus.OK);
+      return new ResponseEntity<>(new LoginResponse(jwt), HttpStatus.OK);
 
     } catch (BadCredentialsException e) {
       return new ResponseEntity<>("Authentication Faled",

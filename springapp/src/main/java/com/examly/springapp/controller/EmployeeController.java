@@ -21,8 +21,7 @@ public class EmployeeController {
 
   @GetMapping("/admin/getEmployee")
   public ResponseEntity<?> getEmployee() {
-    return new ResponseEntity<List<Employee>>(employeeService.getEmployee(),
-                                              HttpStatus.OK);
+    return new ResponseEntity<>(employeeService.getEmployee(), HttpStatus.OK);
   }
 
   @GetMapping("/admin/getEmployee/{id}")
@@ -30,7 +29,7 @@ public class EmployeeController {
     try {
       Employee e = employeeService.getEmployeeId(id);
       return new ResponseEntity<Object>(e, HttpStatus.OK);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -39,9 +38,9 @@ public class EmployeeController {
   public ResponseEntity<?> deleteEmployee(@PathVariable int id) {
     try {
       employeeService.deleteEmployee(id);
-      return new ResponseEntity<Object>("Employee Deleted Successfully",
-                                        HttpStatus.CREATED);
-    } catch (Exception e) {
+      return new ResponseEntity<>("Employee Deleted Successfully",
+                                  HttpStatus.CREATED);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -50,9 +49,9 @@ public class EmployeeController {
   public ResponseEntity<?> editEmployee(@RequestBody Employee employee) {
     try {
       employeeService.editEmployee(employee);
-      return new ResponseEntity<Object>("Employee edited Successfully",
-                                        HttpStatus.CREATED);
-    } catch (Exception e) {
+      return new ResponseEntity<>("Employee edited Successfully",
+                                  HttpStatus.CREATED);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -61,9 +60,9 @@ public class EmployeeController {
   public ResponseEntity<?> saveEmployee(@RequestBody Employee employee) {
     try {
       employeeService.saveEmployee(employee);
-      return new ResponseEntity<Object>("Employee saved Successfully",
-                                        HttpStatus.CREATED);
-    } catch (Exception e) {
+      return new ResponseEntity<>("Employee saved Successfully",
+                                  HttpStatus.CREATED);
+    } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }

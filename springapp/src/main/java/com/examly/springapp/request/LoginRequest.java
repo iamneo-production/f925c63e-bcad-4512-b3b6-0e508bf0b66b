@@ -1,8 +1,8 @@
 package com.examly.springapp.request;
 
 public class LoginRequest {
-  public String email;
-  public String password;
+  private String email;
+  private String password;
 
   public String getEmail() { return this.email; }
 

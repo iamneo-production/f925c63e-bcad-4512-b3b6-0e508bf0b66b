@@ -11,12 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class MyUserDetails implements UserDetails {
 
-  public String name;
-  public String passwrod;
-  public String email;
-  public boolean status;
+  private String name;
+  private String passwrod;
+  private String email;
+  private boolean status;
 
-  public List<GrantedAuthority> role;
+  private List<GrantedAuthority> role;
 
   public MyUserDetails(User user) {
     this.name = user.getName();
