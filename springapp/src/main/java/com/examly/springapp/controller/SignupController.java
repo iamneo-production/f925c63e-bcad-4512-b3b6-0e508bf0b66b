@@ -17,7 +17,7 @@ public class SignupController {
   @PostMapping("/signup")
   public ResponseEntity<?> saveCustomer(@RequestBody User user) {
     if (userRepository.existsByEmail(user.getEmail())) {
-      throw new RuntimeException("User Already Exits");
+      throw new IllegalArgumentException("User Already Exits");
     }
     user.setRole("ROLE_USER");
     user.setPassword(passwrodEncoder.encode(user.getPassword()));

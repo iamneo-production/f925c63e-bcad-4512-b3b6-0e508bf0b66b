@@ -27,21 +27,21 @@ public class EmployeeService {
 
   public void editEmployee(Employee employee) {
     if (!employeeRepository.existsById(employee.id)) {
-      throw new RuntimeException("Not Found");
+      throw new IllegalArgumentException("Not Found");
     }
     employeeRepository.save(employee);
   }
 
   public void saveEmployee(Employee employee) {
     if (employeeRepository.existsById(employee.id)) {
-      throw new RuntimeException("User Already Exits");
+      throw new IllegalArgumentException("User Already Exits");
     }
     employeeRepository.save(employee);
   }
 
   public void deleteEmployee(int id) {
     if (!employeeRepository.existsById(id))
-      throw new RuntimeException("User Already Exits");
+      throw new IllegalArgumentException("User Already Exits");
     employeeRepository.deleteById(id);
   }
 }
