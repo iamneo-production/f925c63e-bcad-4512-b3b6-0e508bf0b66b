@@ -20,25 +20,27 @@ public class RouteService {
 
   public Route getRouteById(int id) {
     if (!routeRepository.existsById(id))
-      throw new RuntimeException("Route does not exist");
+      throw new IllegalArgumentException("Route does not exist");
     return routeRepository.findById(id).get();
   }
 
   public void ediRoute(Route route) {
     if (!routeRepository.existsById(route.getRouteId()))
-      throw new RuntimeException("Editing unknown route is not possible");
+      throw new IllegalArgumentException(
+          "Editing unknown route is not possible");
     routeRepository.save(route);
   }
 
   public void saveRoute(Route route) {
     if (routeRepository.existsById(route.getRouteId()))
-      throw new RuntimeException("Route already exists");
+      throw new IllegalArgumentException("Route already exists");
     routeRepository.save(route);
   }
 
   public void deleteRoute(int id) {
     if (!routeRepository.existsById(id))
-      throw new RuntimeException("Deletion of unknown route is not possible");
+      throw new IllegalArgumentException(
+          "Deletion of unknown route is not possible");
     routeRepository.deleteById(id);
   }
 }
