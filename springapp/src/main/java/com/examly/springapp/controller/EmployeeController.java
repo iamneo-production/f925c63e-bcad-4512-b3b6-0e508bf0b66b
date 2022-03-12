@@ -27,7 +27,7 @@ public class EmployeeController {
   public ResponseEntity<?> getEmployeeById(@PathVariable int id) {
     try {
       Employee e = employeeService.getEmployeeId(id);
-      return new ResponseEntity<Object>(e, HttpStatus.OK);
+      return new ResponseEntity<>(e, HttpStatus.OK);
     } catch (Throwable e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

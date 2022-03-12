@@ -20,26 +20,25 @@ public class RouteService {
 
   public Route getRouteById(int id) throws Throwable {
     if (!routeRepository.existsById(id))
-      throw new Exception("Route does not exist");
-    Route route = routeRepository.findById(id).get();
-    return route;
+      throw new Throwable("Route does not exist");
+    return routeRepository.findById(id).get();
   }
 
   public void ediRoute(Route route) throws Throwable {
     if (!routeRepository.existsById(route.getRouteId()))
-      throw new Exception("Editing unknown route is not possible");
+      throw new Throwable("Editing unknown route is not possible");
     routeRepository.save(route);
   }
 
   public void saveRoute(Route route) throws Throwable {
     if (routeRepository.existsById(route.getRouteId()))
-      throw new Exception("Route already exists");
+      throw new Throwable("Route already exists");
     routeRepository.save(route);
   }
 
   public void deleteRoute(int id) throws Throwable {
     if (!routeRepository.existsById(id))
-      throw new Exception("Deletion of unknown route is not possible");
+      throw new Throwable("Deletion of unknown route is not possible");
     routeRepository.deleteById(id);
   }
 }
