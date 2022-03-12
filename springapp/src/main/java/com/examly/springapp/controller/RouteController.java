@@ -27,7 +27,7 @@ public class RouteController {
     try {
       Route r = routeService.getRouteById(id);
       return new ResponseEntity<>(r, HttpStatus.OK);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -38,7 +38,7 @@ public class RouteController {
       routeService.deleteRoute(id);
       return new ResponseEntity<>("Route Deleted Successfully",
                                   HttpStatus.CREATED);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -49,7 +49,7 @@ public class RouteController {
       routeService.ediRoute(route);
       return new ResponseEntity<>("route edited Successfully",
                                   HttpStatus.CREATED);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -60,7 +60,7 @@ public class RouteController {
       routeService.saveRoute(route);
       return new ResponseEntity<>("Route saved Successfully",
                                   HttpStatus.CREATED);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }

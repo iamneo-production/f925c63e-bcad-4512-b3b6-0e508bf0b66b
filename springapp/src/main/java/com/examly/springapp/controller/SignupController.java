@@ -15,10 +15,9 @@ public class SignupController {
   @Autowired private PasswordEncoder passwrodEncoder;
   @Autowired private UserRepository userRepository;
   @PostMapping("/signup")
-  public ResponseEntity<?> saveCustomer(@RequestBody User user)
-      throws Throwable {
+  public ResponseEntity<?> saveCustomer(@RequestBody User user) {
     if (userRepository.existsByEmail(user.getEmail())) {
-      throw new Throwable("User Already Exits");
+      throw new RuntimeException("User Already Exits");
     }
     user.setRole("ROLE_USER");
     user.setPassword(passwrodEncoder.encode(user.getPassword()));

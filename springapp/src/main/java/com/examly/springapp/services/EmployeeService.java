@@ -25,23 +25,23 @@ public class EmployeeService {
     return employeeRepository.findById(id).get();
   }
 
-  public void editEmployee(Employee employee) throws Throwable {
+  public void editEmployee(Employee employee) {
     if (!employeeRepository.existsById(employee.id)) {
-      throw new Exception("Not Found");
+      throw new RuntimeException("Not Found");
     }
     employeeRepository.save(employee);
   }
 
-  public void saveEmployee(Employee employee) throws Throwable {
+  public void saveEmployee(Employee employee) {
     if (employeeRepository.existsById(employee.id)) {
-      throw new Exception("User Already Exists");
+      throw new RuntimeException("User Already Exits");
     }
     employeeRepository.save(employee);
   }
 
-  public void deleteEmployee(int id) throws Throwable {
+  public void deleteEmployee(int id) {
     if (!employeeRepository.existsById(id))
-      throw new Exception("Employee doesn't exits");
+      throw new RuntimeException("User Already Exits");
     employeeRepository.deleteById(id);
   }
 }

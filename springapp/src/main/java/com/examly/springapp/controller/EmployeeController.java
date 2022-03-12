@@ -28,7 +28,7 @@ public class EmployeeController {
     try {
       Employee e = employeeService.getEmployeeId(id);
       return new ResponseEntity<>(e, HttpStatus.OK);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -39,7 +39,7 @@ public class EmployeeController {
       employeeService.deleteEmployee(id);
       return new ResponseEntity<>("Employee Deleted Successfully",
                                   HttpStatus.CREATED);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -50,7 +50,7 @@ public class EmployeeController {
       employeeService.editEmployee(employee);
       return new ResponseEntity<>("Employee edited Successfully",
                                   HttpStatus.CREATED);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
@@ -61,7 +61,7 @@ public class EmployeeController {
       employeeService.saveEmployee(employee);
       return new ResponseEntity<>("Employee saved Successfully",
                                   HttpStatus.CREATED);
-    } catch (Throwable e) {
+    } catch (RuntimeException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
