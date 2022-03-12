@@ -2,7 +2,6 @@ package com.examly.springapp.controller;
 
 import com.examly.springapp.model.Employee;
 import com.examly.springapp.services.EmployeeService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
