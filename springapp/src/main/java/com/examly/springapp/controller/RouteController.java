@@ -46,7 +46,7 @@ public class RouteController {
   @PutMapping("/admin/editRoutes")
   public ResponseEntity<?> ediRoute(@RequestBody Route route) {
     try {
-      routeService.ediRoute(route);
+      routeService.editRoute(route);
       return new ResponseEntity<>("route edited Successfully",
                                   HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {

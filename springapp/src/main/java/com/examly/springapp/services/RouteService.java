@@ -24,7 +24,7 @@ public class RouteService {
     return routeRepository.findById(id).get();
   }
 
-  public void ediRoute(Route route) {
+  public void editRoute(Route route) {
     if (!routeRepository.existsById(route.getRouteId()))
       throw new IllegalArgumentException(
           "Editing unknown route is not possible");
