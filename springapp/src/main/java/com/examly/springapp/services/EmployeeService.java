@@ -3,12 +3,10 @@ package com.examly.springapp.services;
 import com.examly.springapp.model.Employee;
 import com.examly.springapp.repository.EmployeeRepository;
 import com.examly.springapp.repository.RouteRepository;
-import com.examly.springapp.repository.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class EmployeeService {
