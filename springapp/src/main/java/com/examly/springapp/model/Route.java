@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Route {
@@ -12,6 +13,12 @@ public class Route {
   @Column(nullable = false) public String startPoint;
   @Column(nullable = false) public String endPoint;
   @Column(nullable = false) public int distance;
+  @Column(nullable = false) public int seats = 4;
+  @ManyToOne(optional = false) public Employee employee;
+
+  public Employee getEmployee() { return this.employee; }
+
+  public void setEmployee(Employee employee) { this.employee = employee; }
 
   public int getRouteId() { return this.routeId; }
 
@@ -28,4 +35,8 @@ public class Route {
   public int getDistance() { return this.distance; }
 
   public void setDistance(int distance) { this.distance = distance; }
+
+  public int getSeats() { return this.seats; }
+
+  public void setSeats(int seats) { this.seats = seats; }
 }

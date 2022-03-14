@@ -14,8 +14,9 @@ public class Employee {
   @Column(nullable = false) public String mobileNumber;
   @Column(nullable = false) public String vehicleModel;
   @Column(nullable = false) public String vehicleNumber;
-  @Column(nullable = false) public boolean verified = true;
-  @Column(nullable = false) public boolean active = true;
+  @Column(columnDefinition = "boolean default true") public boolean verified;
+  @Column(columnDefinition = "boolean default true")
+  public boolean active = true;
 
   public int getId() { return this.id; }
 
