@@ -1,0 +1,18 @@
+h2{
+    color: #576EF2;
+    font-weight: bold;
+}
+
+#login-image {
+    width: 50%;
+}
+
+@media only screen and (max-width: 600px) {
+    #login {
+        flex-direction: column;
+        height: 75vh;
+    }
+    #login-image {
+        width: 100%;
+    }
+}
