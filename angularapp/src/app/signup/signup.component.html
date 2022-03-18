@@ -1,1 +1,23 @@
-<p>signup works!</p>
+<div class="signupContainer d-flex flex-column justify-content-center" style="height: 90vh; margin: 20px;">
+    <form [formGroup]="signupForm">
+        <h2 class="text-center mb-3">Signup</h2>
+        <div class="mb-3">
+            <input type="email" class="form-control" formControlName="email" placeholder="Enter Email">
+          </div>
+          <div class="mb-3">
+            <input type="text" class="form-control" formControlName="name" placeholder="Enter Username">
+        </div>
+        <div class="mb-3">
+            <input type="text" class="form-control" formControlName="mobileNumber" placeholder="Enter Mobile Number">
+          </div>
+          <div class="mb-3">
+            <input type="password" class="form-control" formControlName="password" placeholder="Password">
+        </div>
+        <div class="mb-3">
+            <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirm Password">
+        </div>
+        <p class="text-end font-weight-bolder">Already a User? <a [routerLink]="['/login']">Login</a></p>
+
+        <button type="submit" class="btn btn-primary" [disabled]="signupForm.invalid">Signup</button>
+    </form>
+</div>
