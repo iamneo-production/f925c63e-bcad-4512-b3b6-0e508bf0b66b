@@ -42,8 +42,10 @@ public class LoginController {
           myUserDetailsService.loadUserByUsername(loginRequest.getEmail());
 
       String jwt = jwtUtil.generateToken(myUserDetails);
-
-      return new ResponseEntity<>(new LoginResponse(jwt), HttpStatus.OK);
+      return new ResponseEntity<>(
+          new LoginResponse(
+              jwt, myUserDetails.getAuthorities().toArray()[0].toString()),
+          HttpStatus.OK);
 
     } catch (BadCredentialsException e) {
       return new ResponseEntity<>("Authentication Faled",
