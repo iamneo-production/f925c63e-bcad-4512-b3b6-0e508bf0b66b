@@ -4,7 +4,7 @@ import com.examly.springapp.model.Booking;
 import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
 import com.examly.springapp.services.BookingService;
-import com.examly.springapp.utils.JwtUtil;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,26 +12,26 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class BookingController {
 
   @Autowired private BookingService bookingService;
-  @Autowired private JwtUtil jwtUtil;
   @Autowired private UserRepository userRepository;
 
   @PostMapping("/saveBooking")
-  public ResponseEntity<?>
-  saveBooking(@RequestHeader(value = "Authorization") String bearer,
-              @RequestBody Booking booking) {
+  public ResponseEntity<?> saveBooking(HttpServletRequest httpServletRequest,
+                                       @RequestBody Booking booking) {
     try {
-      String email = jwtUtil.extractEmail(bearer.substring(7));
+      String email = (String)httpServletRequest.getAttribute("email");
       User user = userRepository.findByEmail(email).get();
 
-      if (!booking.user.getId().equals(user.getId()))
-        throw new IllegalArgumentException("Unauthorized access");
+      if (user == null) {
+        throw new IllegalArgumentException("Unauthorised Access");
+      }
+
+      booking.user = user;
 
       bookingService.saveBooking(booking);
       return new ResponseEntity<>("Booking Created Successfully",
@@ -42,15 +42,17 @@ public class BookingController {
   }
 
   @DeleteMapping("/deleteBooking")
-  public ResponseEntity<?>
-  deleteBooking(@RequestHeader(value = "Authorization") String bearer,
-                @RequestBody Booking booking) {
+  public ResponseEntity<?> deleteBooking(HttpServletRequest httpServletRequest,
+                                         @RequestBody Booking booking) {
     try {
-      String email = jwtUtil.extractEmail(bearer.substring(7));
+      String email = (String)httpServletRequest.getAttribute("email");
       User user = userRepository.findByEmail(email).get();
 
-      if (!booking.user.getId().equals(user.getId()))
-        throw new IllegalArgumentException("Unauthorized access");
+      if (user == null) {
+        throw new IllegalArgumentException("Unauthorised Access");
+      }
+
+      booking.user = user;
 
       bookingService.deleteBooking(booking);
       return new ResponseEntity<>("Booking Deleted Successfully",
@@ -62,10 +64,10 @@ public class BookingController {
 
   @GetMapping("/bookingStatus")
   public ResponseEntity<?>
-  bookingStatus(@RequestHeader(value = "Authorization") String bearer) {
+  bookingStatus(HttpServletRequest httpServletRequest) {
 
     try {
-      String email = jwtUtil.extractEmail(bearer.substring(7));
+      String email = (String)httpServletRequest.getAttribute("email");
       User user = userRepository.findByEmail(email).get();
 
       Booking booking = bookingService.getBookingById(user.getId());

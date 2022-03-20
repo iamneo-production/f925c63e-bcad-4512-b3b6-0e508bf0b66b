@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -56,6 +55,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             usernamePasswordAuthenticationToken);
       }
     }
+
+    request.setAttribute("email", username);
 
     filterChain.doFilter(request, response);
   }
