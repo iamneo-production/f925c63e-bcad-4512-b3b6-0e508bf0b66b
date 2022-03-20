@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -22,7 +23,12 @@ const routes: Routes = [
     SignupComponent,
     HomeComponent,
   ],
-  imports: [BrowserModule, ReactiveFormsModule, RouterModule.forRoot(routes)],
+  imports: [
+    BrowserModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    RouterModule.forRoot(routes),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

@@ -7,6 +7,7 @@ import com.examly.springapp.request.LoginRequest;
 import com.examly.springapp.respone.LoginResponse;
 import com.examly.springapp.services.MyUserDetailsService;
 import com.examly.springapp.utils.JwtUtil;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -54,18 +54,15 @@ public class LoginController {
   }
 
   @PutMapping("/editCustomer")
-  public ResponseEntity<?>
-  editCustomer(@RequestHeader(value = "Authorization") String bearer,
-               @RequestBody User bodyUser) {
+  public ResponseEntity<?> editCustomer(HttpServletRequest httpServletRequest,
+                                        @RequestBody User bodyUser) {
     try {
-      String email = jwtUtil.extractEmail(bearer.substring(7));
+      String email = (String)httpServletRequest.getAttribute("email");
       User user = userRepository.findByEmail(email).get();
 
-      if (!bodyUser.getId().equals(user.getId()))
-        throw new IllegalArgumentException("Unauthorized access");
-
+      bodyUser.setId(user.getId());
       bodyUser.setPassword(user.getPassword());
-      bodyUser.setRole("ROLE_USER");
+      bodyUser.setRole(user.getRole());
 
       userRepository.save(bodyUser);
 
