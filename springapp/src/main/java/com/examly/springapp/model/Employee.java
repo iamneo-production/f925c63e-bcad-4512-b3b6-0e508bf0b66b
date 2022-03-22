@@ -5,13 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 
 @Entity
 public class Employee {
   @Id @GeneratedValue(strategy = GenerationType.AUTO) public int id;
   @Column(nullable = false) public String username;
-  @Column(nullable = false) public String email;
-  @Column(nullable = false) public String mobileNumber;
+  @Email @Column(nullable = false) public String email;
+  @Pattern(regexp = "(^$|[0-9]{10})")
+  @Column(nullable = false)
+  public String mobileNumber;
   @Column(nullable = false) public String vehicleModel;
   @Column(nullable = false) public String vehicleNumber;
   @Column(columnDefinition = "boolean default true") public boolean verified;

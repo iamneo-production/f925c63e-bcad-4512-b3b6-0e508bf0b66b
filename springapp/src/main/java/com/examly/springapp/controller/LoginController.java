@@ -8,6 +8,7 @@ import com.examly.springapp.respone.LoginResponse;
 import com.examly.springapp.services.MyUserDetailsService;
 import com.examly.springapp.utils.JwtUtil;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,8 @@ public class LoginController {
   @Autowired private UserRepository userRepository;
 
   @PostMapping("/login")
-  public ResponseEntity<?> checkUser(@RequestBody LoginRequest loginRequest) {
+  public ResponseEntity<?>
+  checkUser(@Valid @RequestBody LoginRequest loginRequest) {
     try {
 
       authenticationManager.authenticate(
@@ -54,8 +56,9 @@ public class LoginController {
   }
 
   @PutMapping("/editCustomer")
-  public ResponseEntity<?> editCustomer(HttpServletRequest httpServletRequest,
-                                        @RequestBody User bodyUser) {
+  public ResponseEntity<?>
+  editCustomer(@Valid HttpServletRequest httpServletRequest,
+               @RequestBody User bodyUser) {
     try {
       String email = (String)httpServletRequest.getAttribute("email");
       User user = userRepository.findByEmail(email).get();
