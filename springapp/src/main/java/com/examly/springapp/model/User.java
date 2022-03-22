@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -13,8 +15,10 @@ public class User {
   @GenericGenerator(name = "system-uuid", strategy = "uuid")
   public String id;
   @Column(nullable = false) public String name;
-  @Column(nullable = false, unique = true) public String email;
-  @Column(nullable = false) public Long mobileNumber;
+  @Email @Column(nullable = false, unique = true) public String email;
+  @Pattern(regexp = "(^$|[0-9]{10})")
+  @Column(nullable = false)
+  public String mobileNumber;
   @Column(nullable = false) public boolean status = true;
   @Column(nullable = false) public String password;
   @Column(nullable = false) public String role;
@@ -39,9 +43,9 @@ public class User {
 
   public void setEmail(String email) { this.email = email; }
 
-  public Long getMobileNumber() { return this.mobileNumber; }
+  public String getMobileNumber() { return this.mobileNumber; }
 
-  public void setMobileNumber(Long mobileNumber) {
+  public void setMobileNumber(String mobileNumber) {
     this.mobileNumber = mobileNumber;
   }
 

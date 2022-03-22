@@ -2,6 +2,7 @@ package com.examly.springapp.controller;
 
 import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,12 +11,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 public class SignupController {
   @Autowired private PasswordEncoder passwrodEncoder;
   @Autowired private UserRepository userRepository;
   @PostMapping("/signup")
-  public ResponseEntity<?> saveCustomer(@RequestBody User user) {
+  public ResponseEntity<?> saveCustomer(@Valid @RequestBody User user) {
     if (userRepository.existsByEmail(user.getEmail())) {
       throw new IllegalArgumentException("User Already Exits");
     }

@@ -2,6 +2,7 @@ package com.examly.springapp.controller;
 
 import com.examly.springapp.model.Employee;
 import com.examly.springapp.services.EmployeeService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +46,7 @@ public class EmployeeController {
   }
 
   @PutMapping("/admin/editEmployee")
-  public ResponseEntity<?> editEmployee(@RequestBody Employee employee) {
+  public ResponseEntity<?> editEmployee(@Valid @RequestBody Employee employee) {
     try {
       employeeService.editEmployee(employee);
       return new ResponseEntity<>("Employee edited Successfully",
@@ -56,7 +57,7 @@ public class EmployeeController {
   }
 
   @PostMapping("/admin/saveEmployee")
-  public ResponseEntity<?> saveEmployee(@RequestBody Employee employee) {
+  public ResponseEntity<?> saveEmployee(@Valid @RequestBody Employee employee) {
     try {
       employeeService.saveEmployee(employee);
       return new ResponseEntity<>("Employee saved Successfully",
