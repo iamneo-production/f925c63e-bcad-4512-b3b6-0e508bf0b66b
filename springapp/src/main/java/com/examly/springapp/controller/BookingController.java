@@ -1,13 +1,14 @@
 package com.examly.springapp.controller;
 
+import com.examly.springapp.MyUserDetails;
 import com.examly.springapp.model.Booking;
 import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
 import com.examly.springapp.services.BookingService;
-import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,14 @@ public class BookingController {
   @Autowired private UserRepository userRepository;
 
   @PostMapping("/saveBooking")
-  public ResponseEntity<?> saveBooking(HttpServletRequest httpServletRequest,
-                                       @RequestBody Booking booking) {
+  public ResponseEntity<?> saveBooking(@RequestBody Booking booking) {
     try {
-      String email = (String)httpServletRequest.getAttribute("email");
-      User user = userRepository.findByEmail(email).get();
+      Object principal =
+          SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+      User user =
+          userRepository.findByEmail(((MyUserDetails)principal).getEmail())
+              .get();
 
       if (user == null) {
         throw new IllegalArgumentException("Unauthorised Access");
@@ -42,11 +46,14 @@ public class BookingController {
   }
 
   @DeleteMapping("/deleteBooking")
-  public ResponseEntity<?> deleteBooking(HttpServletRequest httpServletRequest,
-                                         @RequestBody Booking booking) {
+  public ResponseEntity<?> deleteBooking(@RequestBody Booking booking) {
     try {
-      String email = (String)httpServletRequest.getAttribute("email");
-      User user = userRepository.findByEmail(email).get();
+      Object principal =
+          SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+      User user =
+          userRepository.findByEmail(((MyUserDetails)principal).getEmail())
+              .get();
 
       if (user == null) {
         throw new IllegalArgumentException("Unauthorised Access");
@@ -63,12 +70,15 @@ public class BookingController {
   }
 
   @GetMapping("/bookingStatus")
-  public ResponseEntity<?>
-  bookingStatus(HttpServletRequest httpServletRequest) {
+  public ResponseEntity<?> bookingStatus() {
 
     try {
-      String email = (String)httpServletRequest.getAttribute("email");
-      User user = userRepository.findByEmail(email).get();
+      Object principal =
+          SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+      User user =
+          userRepository.findByEmail(((MyUserDetails)principal).getEmail())
+              .get();
 
       Booking booking = bookingService.getBookingById(user.getId());
       if (booking != null) {

@@ -1,6 +1,8 @@
 package com.examly.springapp.controller;
 
 import com.examly.springapp.model.Employee;
+import com.examly.springapp.respone.DataResponse;
+import com.examly.springapp.respone.MessageResponse;
 import com.examly.springapp.services.EmployeeService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ public class EmployeeController {
 
   @GetMapping("/admin/getEmployee")
   public ResponseEntity<?> getEmployee() {
-    return new ResponseEntity<>(employeeService.getEmployee(), HttpStatus.OK);
+    return new ResponseEntity<>(new DataResponse(employeeService.getEmployee()),
+                                HttpStatus.OK);
   }
 
   @GetMapping("/admin/getEmployee/{id}")
@@ -38,8 +41,9 @@ public class EmployeeController {
   public ResponseEntity<?> deleteEmployee(@PathVariable int id) {
     try {
       employeeService.deleteEmployee(id);
-      return new ResponseEntity<>("Employee Deleted Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Employee Deleted Successfully"),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -49,8 +53,9 @@ public class EmployeeController {
   public ResponseEntity<?> editEmployee(@Valid @RequestBody Employee employee) {
     try {
       employeeService.editEmployee(employee);
-      return new ResponseEntity<>("Employee edited Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Employee edited Successfully"),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -60,8 +65,9 @@ public class EmployeeController {
   public ResponseEntity<?> saveEmployee(@Valid @RequestBody Employee employee) {
     try {
       employeeService.saveEmployee(employee);
-      return new ResponseEntity<>("Employee saved Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Employee saved Successfully"),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

@@ -5,9 +5,9 @@ import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
 import com.examly.springapp.request.LoginRequest;
 import com.examly.springapp.respone.LoginResponse;
+import com.examly.springapp.respone.MessageResponse;
 import com.examly.springapp.services.MyUserDetailsService;
 import com.examly.springapp.utils.JwtUtil;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,18 +51,20 @@ public class LoginController {
           HttpStatus.OK);
 
     } catch (BadCredentialsException e) {
-      return new ResponseEntity<>("Authentication Faled",
+      return new ResponseEntity<>(new MessageResponse("Authentication Faled"),
                                   HttpStatus.BAD_REQUEST);
     }
   }
 
   @PutMapping("/editCustomer")
-  public ResponseEntity<?>
-  editCustomer(@Valid HttpServletRequest httpServletRequest,
-               @RequestBody User bodyUser) {
+  public ResponseEntity<?> editCustomer(@Valid @RequestBody User bodyUser) {
     try {
-      String email = (String)httpServletRequest.getAttribute("email");
-      User user = userRepository.findByEmail(email).get();
+      Object principal =
+          SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+      User user =
+          userRepository.findByEmail(((MyUserDetails)principal).getEmail())
+              .get();
 
       bodyUser.setId(user.getId());
       bodyUser.setPassword(user.getPassword());
@@ -69,7 +72,8 @@ public class LoginController {
 
       userRepository.save(bodyUser);
 
-      return new ResponseEntity<>("Updated Successfully", HttpStatus.CREATED);
+      return new ResponseEntity<>(new MessageResponse("Updated Successfully"),
+                                  HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
