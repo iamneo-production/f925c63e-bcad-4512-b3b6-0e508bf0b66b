@@ -2,6 +2,7 @@ package com.examly.springapp.controller;
 
 import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
+import com.examly.springapp.respone.MessageResponse;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 
 @RestController
 public class SignupController {
@@ -25,7 +25,8 @@ public class SignupController {
     user.setPassword(passwrodEncoder.encode(user.getPassword()));
     userRepository.save(user);
 
-    return new ResponseEntity<>("Account Created Successfully",
-                                HttpStatus.CREATED);
+    return new ResponseEntity<>(
+        new MessageResponse("Account Created Successfully"),
+        HttpStatus.CREATED);
   }
 }

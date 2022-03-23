@@ -1,6 +1,8 @@
 package com.examly.springapp.controller;
 
 import com.examly.springapp.model.Route;
+import com.examly.springapp.respone.DataResponse;
+import com.examly.springapp.respone.MessageResponse;
 import com.examly.springapp.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,8 @@ public class RouteController {
   @Autowired private RouteService routeService;
   @GetMapping({"/admin/routes", "/route"})
   public ResponseEntity<?> getRoute() {
-    return new ResponseEntity<>(routeService.getRoute(), HttpStatus.OK);
+    return new ResponseEntity<>(new DataResponse(routeService.getRoute()),
+                                HttpStatus.OK);
   }
 
   @GetMapping("/route/{id}")
@@ -36,8 +39,9 @@ public class RouteController {
   public ResponseEntity<?> deleteRoute(@PathVariable int id) {
     try {
       routeService.deleteRoute(id);
-      return new ResponseEntity<>("Route Deleted Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Route Deleted Successfully"),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -47,8 +51,8 @@ public class RouteController {
   public ResponseEntity<?> ediRoute(@RequestBody Route route) {
     try {
       routeService.editRoute(route);
-      return new ResponseEntity<>("route edited Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("route edited Successfully"), HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -58,8 +62,8 @@ public class RouteController {
   public ResponseEntity<?> saveRoute(@RequestBody Route route) {
     try {
       routeService.saveRoute(route);
-      return new ResponseEntity<>("Route saved Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Route saved Successfully"), HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

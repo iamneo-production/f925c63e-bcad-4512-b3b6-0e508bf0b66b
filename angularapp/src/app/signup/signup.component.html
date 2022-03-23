@@ -1,5 +1,5 @@
 <div class="signupContainer d-flex flex-column justify-content-center" style="height: 90vh; margin: 20px;">
-    <form [formGroup]="signupForm">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <h2 class="text-center mb-3">Signup</h2>
         <div class="mb-3">
             <input type="email" class="form-control" formControlName="email" placeholder="Enter Email">

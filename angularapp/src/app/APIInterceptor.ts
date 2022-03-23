@@ -18,7 +18,7 @@ export class APIInterceptor implements HttpInterceptor {
     const apiReq = req.clone({ url: `${BASE_URL}${req.url}` });
     return next.handle(apiReq).pipe(
       catchError((err) => {
-        console.log(err);
+        alert(err.message);
         return throwError(err);
       })
     );
