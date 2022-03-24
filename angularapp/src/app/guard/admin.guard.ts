@@ -7,14 +7,14 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { roles } from './values';
+import { AuthService } from '../services/auth.service';
+import { roles } from '../utils/values';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserGuard implements CanActivate {
-  constructor(private authServie: AuthService, private router: Router) {}
+export class AdminGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,12 +23,12 @@ export class UserGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.authServie.getJwt);
-    console.log(this.authServie.getRole);
-    if (this.authServie.getJwt && this.authServie.getRole == roles.ROLE_USER) {
+    if (
+      this.authService.getJwt &&
+      this.authService.getRole == roles.ROLE_ADMIN
+    ) {
       return true;
     }
     this.router.navigate(['/login']);
-    return false;
   }
 }
