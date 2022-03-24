@@ -1,0 +1,1 @@
+{"ast":null,"code":"export function confirmPasswordValidator() {\n  return control => {\n    const pass = control.get('password').value;\n    const confirmPass = control.get('confirmPassword').value;\n    return pass === confirmPass ? null : {\n      notSame: true\n    };\n  };\n}","map":null,"metadata":{},"sourceType":"module"}

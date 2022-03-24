@@ -1,0 +1,1 @@
+{"ast":null,"code":"export var roles = /*#__PURE__*/(() => {\n  (function (roles) {\n    roles[\"ROLE_USER\"] = \"ROLE_USER\";\n    roles[\"ROLE_ADMIN\"] = \"ROLE_ADMIN\";\n  })(roles || (roles = {}));\n\n  return roles;\n})();\nexport const BASE_URL = 'http://localhost:8080';","map":null,"metadata":{},"sourceType":"module"}
