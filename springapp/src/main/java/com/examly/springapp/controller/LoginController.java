@@ -4,10 +4,13 @@ import com.examly.springapp.MyUserDetails;
 import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
 import com.examly.springapp.request.LoginRequest;
+import com.examly.springapp.respone.DataResponse;
 import com.examly.springapp.respone.LoginResponse;
 import com.examly.springapp.respone.MessageResponse;
 import com.examly.springapp.services.MyUserDetailsService;
 import com.examly.springapp.utils.JwtUtil;
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,6 +19,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -77,5 +81,15 @@ public class LoginController {
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
+  }
+
+  @GetMapping("/admin/getUsers")
+  public ResponseEntity<?> getUsers() {
+    Iterable<User> users = userRepository.findAllByRole("ROLE_USER");
+    List<User> userList = new ArrayList<>();
+
+    users.forEach(userList::add);
+    return new ResponseEntity<>(new DataResponse(userList),
+                                HttpStatus.ACCEPTED);
   }
 }

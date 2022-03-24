@@ -10,11 +10,13 @@ import { HomeComponent } from './pages/user/home/home.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APIInterceptor } from './utils/APIInterceptor';
 import { UserGuard } from './guard/user.guard';
+import { AdminHomeComponent } from './pages/admin/home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: '', component: HomeComponent, canActivate: [UserGuard] },
+  { path: 'admin', component: AdminHomeComponent },
 ];
 
 @NgModule({
@@ -24,6 +26,7 @@ const routes: Routes = [
     LoginComponent,
     SignupComponent,
     HomeComponent,
+    AdminHomeComponent,
   ],
   imports: [
     BrowserModule,
