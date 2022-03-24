@@ -1,5 +1,7 @@
 package com.examly.springapp.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import org.hibernate.annotations.GenericGenerator;
+
 
 @Entity
 public class User {
@@ -20,7 +23,9 @@ public class User {
   @Column(nullable = false)
   public String mobileNumber;
   @Column(nullable = false) public boolean status = true;
-  @Column(nullable = false) public String password;
+  @JsonProperty(access = Access.WRITE_ONLY)
+  @Column(nullable = false)
+  public String password;
   @Column(nullable = false) public String role;
 
   public String getRole() { return this.role; }
