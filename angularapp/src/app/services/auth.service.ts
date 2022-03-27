@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { roles } from '../utils/values';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { tokenGetter } from '../app.module';
 
 interface LoginRequest {
   email: string;
@@ -13,50 +15,33 @@ interface SignupRequest extends LoginRequest {
   mobileNumber: string;
 }
 
-type ROLE = keyof typeof roles;
+export type ROLE = keyof typeof roles;
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private jwt: string;
-  private role: ROLE;
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private jwtHelper: JwtHelperService
+  ) {}
 
-  public set setJwt(jwt: string) {
-    this.jwt = jwt;
-  }
-
-  public get getJwt() {
-    return this.jwt;
-  }
-
-  public set setRole(roles: ROLE) {
-    this.role = roles;
-  }
-
-  public get getRole() {
-    return this.role;
-  }
-
-  constructor(private httpClient: HttpClient, private router: Router) {
-    this.setJwt = localStorage.getItem('jwt');
-    this.setRole = localStorage.getItem('role') as ROLE;
-  }
+  public role: ROLE;
 
   public LoginAction(loginRequest: LoginRequest): void {
     this.httpClient
-      .post<AuthService>('/login', loginRequest)
+      .post<{ jwt: string }>('/login', loginRequest)
       .subscribe((data) => {
         localStorage.setItem('jwt', data.jwt);
-        localStorage.setItem('role', data.role);
-        this.setJwt = data.jwt;
-        this.setRole = data.role;
 
-        if (this.getRole === roles.ROLE_USER) {
+        const { role }: { role: ROLE } = this.jwtHelper.decodeToken(data.jwt);
+
+        if (role === roles.ROLE_USER) {
           this.router.navigate(['/']);
         }
 
-        if (this.getRole === roles.ROLE_ADMIN) {
+        if (role === roles.ROLE_ADMIN) {
           this.router.navigate(['/admin']);
         }
       });
@@ -67,5 +52,11 @@ export class AuthService {
       alert('Account created successfully');
       this.router.navigate(['/login']);
     });
+  }
+
+  public Logout(): void {
+    this.role = null;
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 }

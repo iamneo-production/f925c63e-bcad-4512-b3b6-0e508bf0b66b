@@ -25,7 +25,7 @@ public class RouteController {
                                 HttpStatus.OK);
   }
 
-  @GetMapping("/route/{id}")
+  @GetMapping({"/route/{id}"})
   public ResponseEntity<?> getRouteById(@PathVariable int id) {
     try {
       Route r = routeService.getRouteById(id);
@@ -63,7 +63,8 @@ public class RouteController {
     try {
       routeService.saveRoute(route);
       return new ResponseEntity<>(
-          new MessageResponse("Route saved Successfully"), HttpStatus.CREATED);
+          new MessageResponse(Integer.toString(route.getRouteId())),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

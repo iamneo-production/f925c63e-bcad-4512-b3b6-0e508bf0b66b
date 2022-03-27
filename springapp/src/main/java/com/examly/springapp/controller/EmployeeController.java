@@ -66,7 +66,7 @@ public class EmployeeController {
     try {
       employeeService.saveEmployee(employee);
       return new ResponseEntity<>(
-          new MessageResponse("Employee saved Successfully"),
+          new MessageResponse(Integer.toString(employee.getId())),
           HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

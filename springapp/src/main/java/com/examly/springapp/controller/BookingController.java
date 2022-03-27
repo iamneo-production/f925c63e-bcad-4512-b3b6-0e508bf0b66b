@@ -4,6 +4,7 @@ import com.examly.springapp.MyUserDetails;
 import com.examly.springapp.model.Booking;
 import com.examly.springapp.model.User;
 import com.examly.springapp.repository.UserRepository;
+import com.examly.springapp.respone.MessageResponse;
 import com.examly.springapp.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +39,9 @@ public class BookingController {
       booking.user = user;
 
       bookingService.saveBooking(booking);
-      return new ResponseEntity<>("Booking Created Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Booking Created Successfully"),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -62,8 +64,9 @@ public class BookingController {
       booking.user = user;
 
       bookingService.deleteBooking(booking);
-      return new ResponseEntity<>("Booking Deleted Successfully",
-                                  HttpStatus.CREATED);
+      return new ResponseEntity<>(
+          new MessageResponse("Booking Deleted Successfully"),
+          HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

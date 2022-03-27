@@ -1,0 +1,20 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-end m-3">
+        <button class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#' + addSelector">+Add</button>
+    </div>
+    
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <div *ngFor="let route of routes">
+            <app-card-route [route]="route"
+            (delete)="deleteAdminRoutes($event)"
+            (edit)="editAdminRoutes($event)"
+            >
+            </app-card-route>
+        </div>
+    </div>
+</div>
+
+<app-modal [heading]="addRouteHeading" [drop]="addSelector">
+    <span class="insert">
+    </span>
+  </app-modal>
