@@ -1,7 +1,6 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
 
 export interface User {
   id: string;
@@ -15,17 +14,9 @@ export interface User {
   providedIn: 'root',
 })
 export class UserService {
-  constructor(
-    private httpCleint: HttpClient,
-    private authService: AuthService
-  ) {}
+  constructor(private httpCleint: HttpClient) {}
 
   public getUsers(): Observable<{ data: User[] }> {
-    return this.httpCleint.get<any>('/admin/getUsers', {
-      headers: new HttpHeaders().set(
-        'Authorization',
-        `Bearer ${this.authService.getJwt}`
-      ),
-    });
+    return this.httpCleint.get<any>('/admin/getUsers');
   }
 }

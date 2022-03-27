@@ -34,9 +34,11 @@ public class BookingService {
     if (route.getSeats() <= 0)
       throw new IllegalArgumentException("Seats are unavailable");
 
-    route.setSeats(route.getSeats() - 1);
+    // route.setSeats(route.getSeats() - 1);
 
-    routeService.editRoute(route);
+    // routeService.editRoute(route);
+
+    // System.out.println(booking.user.getEmail());
 
     bookingRepsository.save(booking);
   }

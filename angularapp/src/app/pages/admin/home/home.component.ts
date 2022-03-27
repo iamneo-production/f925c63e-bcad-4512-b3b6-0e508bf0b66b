@@ -11,6 +11,19 @@ export class AdminHomeComponent implements OnInit {
   public employees: Employee[];
   public users: User[];
 
+  public addEmployeeHeading = 'Add Employee';
+  public editEmployeeHeading = 'Edit Employee';
+  public viewEmployeeHeading = 'View Employee';
+  public viewUserHeading = 'View User';
+
+  public addSelector = 'adddrop';
+  public editSelector = 'editdrop';
+  public viewSelector = 'viewdrop';
+
+  public on = 'true';
+
+  public selectedPerson: Employee[] = [];
+
   constructor(
     private employeeService: EmployeeService,
     private userService: UserService
@@ -25,6 +38,27 @@ export class AdminHomeComponent implements OnInit {
 
     this.userService.getUsers().subscribe((data) => {
       this.users = data.data;
+      console.log(data.data);
+    });
+  }
+
+  public addEmployee(data: Employee): void {
+    this.employeeService.addEmployee(data).subscribe((d) => {
+      data.id = +d.msg;
+      this.employees.push(data);
+    });
+  }
+
+  public updateEmployee(data: Employee): void {
+    this.employeeService.updateEmployee(data).subscribe(() => {
+      let ind = this.employees.findIndex((d) => d.id === data.id);
+      this.employees[ind] = data;
+    });
+  }
+
+  public deleteEmployee(data: Employee): void {
+    this.employeeService.deleteEmployee(data).subscribe(() => {
+      this.employees = this.employees.filter((e) => e.id !== data.id);
     });
   }
 }

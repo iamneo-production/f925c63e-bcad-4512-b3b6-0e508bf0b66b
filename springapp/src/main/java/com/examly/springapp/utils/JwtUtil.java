@@ -40,14 +40,17 @@ public class JwtUtil {
 
   public String generateToken(MyUserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
-    return createToken(claims, userDetails.getEmail());
+    return createToken(claims, userDetails.getEmail(),
+                       userDetails.getAuthorities().toArray()[0].toString());
   }
 
-  private String createToken(Map<String, Object> claims, String subject) {
+  private String createToken(Map<String, Object> claims, String email,
+                             String role) {
 
+    claims.put("role", role);
     return Jwts.builder()
         .setClaims(claims)
-        .setSubject(subject)
+        .setSubject(email)
         .setIssuedAt(new Date(System.currentTimeMillis()))
         .setExpiration(
             new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))

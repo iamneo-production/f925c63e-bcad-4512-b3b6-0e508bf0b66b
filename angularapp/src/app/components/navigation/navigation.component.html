@@ -1,6 +1,13 @@
 <div class="navigation">
     <h4>Ride-Sharing</h4>
-    <!-- <div>
-        Links
-    </div> -->
+    <div *ngIf="authService.role === 'ROLE_ADMIN'">
+        <a [routerLink]="['/admin']">Home</a>
+        <a [routerLink]="['/admin/routes']">Routes</a>
+        <a  (click)="logout()">Logout</a>
+    </div>
+    <div *ngIf="authService.role === 'ROLE_USER'">
+        <a  [routerLink]="['/']">Home</a>
+        <a >Profile</a>
+        <a  (click)="logout()">Logout</a>
+    </div>
 </div>

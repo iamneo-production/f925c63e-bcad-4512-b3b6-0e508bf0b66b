@@ -10,13 +10,20 @@
         <p class="card-text">{{user.email}}</p>
       </div>
       <div class="card-footer">
-        <a  class="btn btn-primary">View</a>
+        <button  class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#' + viewSelector + user.id">View</button>
       </div>
+      <app-modal [heading]="viewUserHeading" [drop]="viewSelector + user.id">
+        <span class="insert">
+          <app-userview [user]="user" [view]="on"></app-userview>
+        </span>
+      </app-modal>
     </div>
+    
 </div>
 <div class="card">
-  <h3 class="card-header">
+  <h3 class="card-header d-flex justify-content-between">
     Employees
+    <button class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#' + addSelector">+Add</button>
   </h3>
   <div *ngFor="let employee of employees">
     <div class="card-body custom-card" >
@@ -25,10 +32,26 @@
       <h5 class="card-title">Email</h5>
       <p class="card-text">{{employee.email}}</p>
     </div>
+    <app-modal [heading]="viewEmployeeHeading" [drop]="viewSelector + employee.id">
+      <span class="insert">
+        <app-addemployeeform [employee]="employee" [view]="on"></app-addemployeeform>
+      </span>
+    </app-modal>
+    <app-modal [heading]="editEmployeeHeading" [drop]="editSelector + employee.id">
+      <span class="insert">
+        <app-addemployeeform (addEmp)="updateEmployee($event)" [employee]="employee"></app-addemployeeform>
+      </span>
+    </app-modal>
     <div class="card-footer d-flex">
-      <a  class="btn btn-primary ms-2">View</a>
-      <a  class="btn btn-secondary ms-2">Edit</a>
-      <a  class="btn btn-danger ms-2">Delete</a>
+      <button  class="btn btn-primary ms-2" data-bs-toggle="modal" [attr.data-bs-target]="'#' + viewSelector + employee.id">View</button>
+      <button  class="btn btn-secondary ms-2" data-bs-toggle="modal" [attr.data-bs-target]="'#' + editSelector + employee.id">Edit</button>
+      <button  class="btn btn-danger ms-2" (click)="deleteEmployee(employee)">Delete</button>
     </div>
-  </div>
+  </div> 
 </div>
+
+<app-modal [heading]="addEmployeeHeading" [drop]="addSelector">
+  <span class="insert">
+    <app-addemployeeform (addEmp)="addEmployee($event)" [disabled]="on"></app-addemployeeform>
+  </span>
+</app-modal>

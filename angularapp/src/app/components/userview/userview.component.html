@@ -1,0 +1,21 @@
+<form class="modal-body" autocomplete="false">
+    <label>Name</label>
+    <div class="mb-3">
+      <input type="text" class="form-control" [value]="user.name">
+    </div>
+    <label>Email</label>
+    <div class="mb-3">
+      <input type="email" class="form-control" [value]="user.email">
+    </div>
+    <label>Mobile Number</label>
+    <div class="mb-3">
+      <input type="text" class="form-control" [value]="user.mobileNumber">
+    </div>
+      <div class="mb-3">
+        <input type="checkbox" class="btn-check" id="btncheck2" autocomplete="off" [checked]="user.status">
+        <label class="btn btn-outline-primary" for="btncheck2">Active</label>
+      </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+    </div>
+</form>

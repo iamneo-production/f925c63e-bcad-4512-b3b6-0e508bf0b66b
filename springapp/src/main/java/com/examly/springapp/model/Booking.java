@@ -6,12 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Booking {
   @Id @GeneratedValue(strategy = GenerationType.AUTO) public int bookingId;
 
-  @ManyToOne(optional = false) public Route route;
+  @ManyToOne(optional = false)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  public Route route;
 
   @OneToOne(optional = false) public User user;
 

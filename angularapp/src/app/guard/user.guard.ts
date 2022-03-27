@@ -7,14 +7,20 @@ import {
   Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+import { AuthService, ROLE } from '../services/auth.service';
 import { roles } from '../utils/values';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { tokenGetter } from '../app.module';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserGuard implements CanActivate {
-  constructor(private authServie: AuthService, private router: Router) {}
+  constructor(
+    private router: Router,
+    private jwtHelper: JwtHelperService,
+    private authService: AuthService
+  ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -23,12 +29,19 @@ export class UserGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    console.log(this.authServie.getJwt);
-    console.log(this.authServie.getRole);
-    if (this.authServie.getJwt && this.authServie.getRole == roles.ROLE_USER) {
+    if (!tokenGetter()) {
+      this.authService.role = null;
+      this.router.navigate(['/login']);
+    }
+    const { role }: { role: ROLE } = this.jwtHelper.decodeToken(tokenGetter());
+    if (
+      !this.jwtHelper.isTokenExpired(tokenGetter()) &&
+      role == roles.ROLE_USER
+    ) {
+      this.authService.role = roles.ROLE_USER;
       return true;
     }
+    this.authService.role = null;
     this.router.navigate(['/login']);
-    return false;
   }
 }
