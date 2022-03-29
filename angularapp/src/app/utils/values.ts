@@ -3,4 +3,5 @@ export enum roles {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
-export const BASE_URL = 'http://localhost:8080';
+export const BASE_URL =
+  'https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/';
