@@ -1,1 +1,29 @@
-<p>home works!</p>
+<div class="container-fluid" id="userHomeBox">
+    <div class="card mt-2" *ngIf="bookStatus">
+        <div class="card-body">
+          <h2 class="card-title">Your Booking</h2>
+          <h5 class="card-text">{{bookStatus.route.startPoint}} to {{bookStatus.route.endPoint}}</h5>
+          <p class="card-text">Car Type: {{bookStatus.route.employee.vehicleModel}}</p>
+          <p class="card-text">Car Number: {{bookStatus.route.employee.vehicleNumber}}</p>
+          <h2 class="card-text">Contact</h2>
+          <p class="card-text">Name: {{bookStatus.route.employee.username}}</p>
+          <p class="card-text">Contact: {{bookStatus.route.employee.mobileNumber}}</p>
+          <button class="btn btn-danger" (click)="cancel(bookStatus)">Cancel</button>
+        </div>
+      </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <div *ngIf="!routes || routes.length == 0">
+          No Routes
+        </div>
+        <div *ngFor="let route of routes">
+            <app-card-route [route]="route" [booking]="true" (book)="book($event)" [isBooked]="isBooked">
+            </app-card-route>
+        </div>
+    </div>
+</div>
+
+<app-modal [heading]="profile" [drop]="drop" *ngIf="user">
+  <span class="insert">
+      <app-userview [user]="user" (update)="updateUser($event)"></app-userview>
+  </span>
+</app-modal>

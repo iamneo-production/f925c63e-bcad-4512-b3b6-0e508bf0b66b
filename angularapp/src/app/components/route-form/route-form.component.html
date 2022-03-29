@@ -1,1 +1,27 @@
-<p>route-form works!</p>
+<form class="modal-body" autocomplete="false" [formGroup]="routeForm" (ngSubmit)="onSubmit()">
+    <label>Start</label>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="Start" formControlName="startPoint">
+    </div>
+    <label>End</label>
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="End" formControlName="endPoint">
+    </div>
+    <label>Seats</label>
+    <div class="mb-3">
+      <input type="number" class="form-control" placeholder="Seats" formControlName="seats">
+    </div>
+    <label>Distance</label>
+    <div class="mb-3">
+      <input type="number" class="form-control" placeholder="Distance" formControlName="distance">
+    </div>
+    <label>Employee</label>
+    <select class="form-select form-select-sm" aria-label=".form-select-sm example" formControlName="employee">
+      <option *ngFor="let employee of employees" [value]="employee.id">{{employee.email}}</option>
+    </select>
+    
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" data-bs-dismiss="modal" name="close">Close</button>
+      <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="routeForm.invalid">Submit</button>
+    </div>
+</form>

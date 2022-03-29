@@ -1,13 +1,18 @@
 <div class="card m-3">
     <div class="card-header">
-      <h3>Place {{route.startPoint}} to Place {{route.endPoint}}</h3>
+      <h3>{{route.startPoint}} to {{route.endPoint}}</h3>
     </div>
     <div class="card-body">
       <h5 class="card-title">Distance: {{route.distance}}KM</h5>
       <p class="card-text">Seats avaialble: {{route.seats}} seats</p>
       <p class="card-text">Car Type: {{route.employee.vehicleModel}}</p>
       <p class="card-text">Car Number: {{route.employee.vehicleNumber}}</p>
-      <a href="#" class="btn btn-danger ms-2" (click)="delete.emit(route.routeid)">Delete</a>
-      <a href="#" class="btn btn-secondary ms-2">Edit</a>
+      <div *ngIf="!booking">
+        <button class="btn btn-danger ms-2" (click)="delete.emit(route.routeid)">Delete</button>
+        <button class="btn btn-secondary ms-2" data-bs-toggle="modal" [attr.data-bs-target]="'#' + editSelector + route.routeid">Edit</button>
+      </div>
+      <div *ngIf="booking">
+        <button class="btn btn-success" (click)="book.emit(route)" [attr.disabled]="isBooked ? true : undefined">Book</button>
+      </div>
     </div>
 </div>

@@ -70,6 +70,7 @@ public class LoginController {
       bodyUser.setId(user.getId());
       bodyUser.setPassword(user.getPassword());
       bodyUser.setRole(user.getRole());
+      bodyUser.setStatus(user.isStatus());
 
       userRepository.save(bodyUser);
 
@@ -88,5 +89,20 @@ public class LoginController {
     users.forEach(userList::add);
     return new ResponseEntity<>(new DataResponse(userList),
                                 HttpStatus.ACCEPTED);
+  }
+  @GetMapping("/getUser")
+  public ResponseEntity<?> viewCustomer() {
+    try {
+      Object principal =
+          SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+      User user =
+          userRepository.findByEmail(((MyUserDetails)principal).getEmail())
+              .get();
+
+      return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
+    } catch (IllegalArgumentException e) {
+      return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
   }
 }

@@ -1,20 +1,31 @@
-<div class="container-fluid">
+<div class="container-fluid" id="adminRoute">
     <div class="d-flex justify-content-end m-3">
-        <button class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#' + addSelector">+Add</button>
+        <button class="btn btn-primary" data-bs-toggle="modal" [attr.data-bs-target]="'#' + addSelector" id="addButton">+Add</button>
+    </div>
+
+    <div *ngIf="!routes || routes.length == 0">
+        No Routes
     </div>
     
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4" *ngIf="routes">
         <div *ngFor="let route of routes">
+            <app-modal [heading]="editRouteHeading" [drop]="editSelector + route.routeid">
+                <span class="insert" *ngIf="employees">
+                    <app-route-form [route]="route" (addRoute)="editAdminRoutes($event)" [employees]="employees"></app-route-form>
+                </span>
+            </app-modal>
             <app-card-route [route]="route"
             (delete)="deleteAdminRoutes($event)"
             (edit)="editAdminRoutes($event)"
+            [editSelector]="editSelector"
             >
             </app-card-route>
         </div>
     </div>
 </div>
 
-<app-modal [heading]="addRouteHeading" [drop]="addSelector">
+<app-modal [heading]="addRouteHeading" [drop]="addSelector" *ngIf="employees">
     <span class="insert">
+        <app-route-form (addRoute)="addAdminRoutes($event)" [reset]="true" [employees]="employees"></app-route-form>
     </span>
-  </app-modal>
+</app-modal>

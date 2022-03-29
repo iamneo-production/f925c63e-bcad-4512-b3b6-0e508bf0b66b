@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Employee } from 'src/app/services/employee.service';
 
 @Component({
@@ -17,13 +17,39 @@ export class AddemployeeformComponent implements OnInit {
 
   ngOnInit(): void {
     this.addEmplooyee = this.formBuilder.group({
-      username: this.employee ? this.employee.username : '',
-      email: this.employee ? this.employee.email : '',
-      mobileNumber: this.employee ? this.employee.mobileNumber : '',
-      vehicleNumber: this.employee ? this.employee.vehicleNumber : '',
-      vehicleModel: this.employee ? this.employee.vehicleModel : '',
-      verified: this.employee ? this.employee.verified : true,
-      active: this.employee ? this.employee.active : true,
+      username: [
+        this.employee ? this.employee.username : '',
+        [Validators.required],
+      ],
+      email: [
+        this.employee ? this.employee.email : '',
+        [Validators.required, Validators.email],
+      ],
+      mobileNumber: [
+        this.employee ? this.employee.mobileNumber : '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern('(^$|[0-9]{10})'),
+        ],
+      ],
+      vehicleNumber: [
+        this.employee ? this.employee.vehicleNumber : '',
+        [Validators.required],
+      ],
+      vehicleModel: [
+        this.employee ? this.employee.vehicleModel : '',
+        [Validators.required],
+      ],
+      verified: [
+        this.employee ? this.employee.verified : true,
+        [Validators.required],
+      ],
+      active: [
+        this.employee ? this.employee.active : true,
+        [Validators.required],
+      ],
     });
 
     if (this.view) {
@@ -40,5 +66,8 @@ export class AddemployeeformComponent implements OnInit {
 
   onSubmit(): void {
     this.addEmp.emit({ ...this.addEmplooyee.value, id: this.employee?.id });
+    if (this.disabled) {
+      this.addEmplooyee.reset();
+    }
   }
 }

@@ -34,26 +34,24 @@ public class BookingService {
     if (route.getSeats() <= 0)
       throw new IllegalArgumentException("Seats are unavailable");
 
-    // route.setSeats(route.getSeats() - 1);
-
-    // routeService.editRoute(route);
-
-    // System.out.println(booking.user.getEmail());
-
     bookingRepsository.save(booking);
+
+    route.setSeats(route.getSeats() - 1);
+
+    routeService.editRoute(route);
   }
 
-  public void deleteBooking(Booking booking) {
-    if (!bookingRepsository.existsById(booking.getBookingId()))
+  public void deleteBooking(int bookingId) {
+    if (!bookingRepsository.existsById(bookingId))
       throw new IllegalArgumentException(
           "User does not have booking to be deleted");
 
-    Route route = routeService.getRouteById(booking.route.getRouteId());
+    Booking booking = bookingRepsository.findById(bookingId).get();
+    Route route = booking.getRoute();
+    bookingRepsository.deleteById(booking.getBookingId());
 
     route.setSeats(route.getSeats() + 1);
 
     routeService.editRoute(route);
-
-    bookingRepsository.deleteById(booking.getBookingId());
   }
 }
