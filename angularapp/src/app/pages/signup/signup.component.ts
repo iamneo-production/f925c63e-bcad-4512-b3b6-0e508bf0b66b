@@ -6,7 +6,6 @@ import { confirmPasswordValidator } from '../../utils/confirmPassword.validator'
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
   signupForm: FormGroup;
@@ -16,7 +15,6 @@ export class SignupComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    document.body.style.backgroundColor = '#D9D9D9';
     this.signupForm = this.formBuilder.group(
       {
         email: ['', [Validators.required, Validators.email]],

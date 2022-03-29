@@ -2,12 +2,12 @@
     <h4>Ride-Sharing</h4>
     <div *ngIf="authService.role === 'ROLE_ADMIN'">
         <a [routerLink]="['/admin']">Home</a>
-        <a [routerLink]="['/admin/routes']">Routes</a>
-        <a  (click)="logout()">Logout</a>
+        <a [routerLink]="['/admin/routes']" id="routeButton">Routes</a>
+        <a  (click)="logout()" id="logout">Logout</a>
     </div>
     <div *ngIf="authService.role === 'ROLE_USER'">
         <a  [routerLink]="['/']">Home</a>
-        <a >Profile</a>
-        <a  (click)="logout()">Logout</a>
+        <a data-bs-toggle="modal" data-bs-target="#userProfileBox" id="profileButton">Profile</a>
+        <a  (click)="logout()" id="logout">Logout</a>
     </div>
 </div>

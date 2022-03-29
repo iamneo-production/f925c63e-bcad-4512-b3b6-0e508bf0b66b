@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,15 +41,15 @@ public class BookingController {
 
       bookingService.saveBooking(booking);
       return new ResponseEntity<>(
-          new MessageResponse("Booking Created Successfully"),
+          new MessageResponse(Integer.toString(booking.getBookingId())),
           HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
-  @DeleteMapping("/deleteBooking")
-  public ResponseEntity<?> deleteBooking(@RequestBody Booking booking) {
+  @DeleteMapping("/deleteBooking/{bookingId}")
+  public ResponseEntity<?> deleteBooking(@PathVariable int bookingId) {
     try {
       Object principal =
           SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -61,9 +62,7 @@ public class BookingController {
         throw new IllegalArgumentException("Unauthorised Access");
       }
 
-      booking.user = user;
-
-      bookingService.deleteBooking(booking);
+      bookingService.deleteBooking(bookingId);
       return new ResponseEntity<>(
           new MessageResponse("Booking Deleted Successfully"),
           HttpStatus.CREATED);

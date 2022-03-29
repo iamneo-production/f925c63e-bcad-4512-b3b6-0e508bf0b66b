@@ -36,9 +36,8 @@ export class AdminHomeComponent implements OnInit {
       this.employees = data.data;
     });
 
-    this.userService.getUsers().subscribe((data) => {
+    this.userService.getAdminUsers().subscribe((data) => {
       this.users = data.data;
-      console.log(data.data);
     });
   }
 

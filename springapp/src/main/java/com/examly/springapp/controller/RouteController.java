@@ -1,8 +1,10 @@
 package com.examly.springapp.controller;
 
+import com.examly.springapp.model.Employee;
 import com.examly.springapp.model.Route;
 import com.examly.springapp.respone.DataResponse;
 import com.examly.springapp.respone.MessageResponse;
+import com.examly.springapp.services.EmployeeService;
 import com.examly.springapp.services.RouteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class RouteController {
 
   @Autowired private RouteService routeService;
-  @GetMapping({"/admin/routes", "/route"})
+  @Autowired private EmployeeService employeeService;
+  @GetMapping({"/admin/routes", "/routes"})
   public ResponseEntity<?> getRoute() {
     return new ResponseEntity<>(new DataResponse(routeService.getRoute()),
                                 HttpStatus.OK);
@@ -51,8 +54,9 @@ public class RouteController {
   public ResponseEntity<?> ediRoute(@RequestBody Route route) {
     try {
       routeService.editRoute(route);
-      return new ResponseEntity<>(
-          new MessageResponse("route edited Successfully"), HttpStatus.CREATED);
+      Employee emp = employeeService.getEmployeeId(route.employee.getId());
+      route.employee = emp;
+      return new ResponseEntity<>(route, HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -62,9 +66,9 @@ public class RouteController {
   public ResponseEntity<?> saveRoute(@RequestBody Route route) {
     try {
       routeService.saveRoute(route);
-      return new ResponseEntity<>(
-          new MessageResponse(Integer.toString(route.getRouteId())),
-          HttpStatus.CREATED);
+      Employee emp = employeeService.getEmployeeId(route.employee.getId());
+      route.employee = emp;
+      return new ResponseEntity<>(route, HttpStatus.CREATED);
     } catch (IllegalArgumentException e) {
       return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

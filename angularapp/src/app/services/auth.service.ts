@@ -49,7 +49,6 @@ export class AuthService {
 
   public SignupAction(signupRequest: SignupRequest): void {
     this.httpClient.post<any>('/signup', signupRequest).subscribe(() => {
-      alert('Account created successfully');
       this.router.navigate(['/login']);
     });
   }

@@ -16,7 +16,15 @@ export interface User {
 export class UserService {
   constructor(private httpCleint: HttpClient) {}
 
-  public getUsers(): Observable<{ data: User[] }> {
+  public getUser() {
+    return this.httpCleint.get<User>('/getUser');
+  }
+
+  public getAdminUsers(): Observable<{ data: User[] }> {
     return this.httpCleint.get<any>('/admin/getUsers');
+  }
+
+  public updateUser(user: User) {
+    return this.httpCleint.put<User>('/editCustomer', user);
   }
 }
