@@ -10,8 +10,7 @@ const puppeteer = require('puppeteer');
 			width: 1200,
 			height: 800,
 		});
-		page.click('#signupLink');
-		await page.waitForNavigation({ timeout: 2000 });
+		await page.click('#signupLink');
 		await page.waitForSelector('#signupBox', { timeout: 3000 });
 		await page.type('#email', 'test@gmail.com');
 		await page.type('#name', 'testuser');
