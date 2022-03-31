@@ -1,13 +1,11 @@
 const puppeteer = require('puppeteer');
-// https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/
-// https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/
-// https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/
-// https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/
 (async () => {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
 	try {
-		await page.goto('http://localhost:8081/');
+		await page.goto(
+			'https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/'
+		);
 		await page.setViewport({
 			width: 1200,
 			height: 800,
@@ -37,7 +35,9 @@ const login = async () => {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
 	try {
-		await page.goto('http://localhost:8081/');
+		await page.goto(
+			'https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/'
+		);
 		await page.setViewport({
 			width: 1200,
 			height: 800,
@@ -62,7 +62,9 @@ const login = async () => {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
 	try {
-		await page.goto('http://localhost:8081/');
+		await page.goto(
+			'https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/'
+		);
 		await page.setViewport({
 			width: 1200,
 			height: 800,
@@ -85,7 +87,9 @@ const login = async () => {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
 	try {
-		await page.goto('http://localhost:8081/');
+		await page.goto(
+			'https://8081-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io/'
+		);
 		await page.setViewport({
 			width: 1200,
 			height: 800,
