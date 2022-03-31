@@ -20,6 +20,7 @@ import { UserviewComponent } from './components/userview/userview.component';
 import { AdminRoutesComponent } from './pages/admin/routes/routes.component';
 import { CardRouteComponent } from './components/card-route/card-route.component';
 import { RouteFormComponent } from './components/route-form/route-form.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
     component: AdminRoutesComponent,
     canActivate: [AdminGuard],
   },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 export function tokenGetter() {
@@ -51,6 +53,7 @@ export function tokenGetter() {
     AdminRoutesComponent,
     CardRouteComponent,
     RouteFormComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     BrowserModule,
