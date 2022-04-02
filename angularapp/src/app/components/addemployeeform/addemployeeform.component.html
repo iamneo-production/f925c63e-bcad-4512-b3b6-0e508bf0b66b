@@ -21,12 +21,12 @@
     </div>
     <div *ngIf="!disabled">
       <div class="mb-3">
-        <input type="checkbox" class="btn-check" id="btncheck1" formControlName="verified"   autocomplete="off">
-      <label class="btn btn-outline-primary" for="btncheck1">Verified</label>
+        <input type="checkbox" class="btn-check" [id]="'btncheck1'+employee.id + view" formControlName="verified" autocomplete="off">
+        <label class="btn btn-outline-primary" [for]="'btncheck1'+employee.id + view">Verified</label>
       </div>
       <div class="mb-3">
-        <input type="checkbox" class="btn-check" id="btncheck2" formControlName="active"   autocomplete="off">
-        <label class="btn btn-outline-primary" for="btncheck2">Active</label>
+        <input type="checkbox" class="btn-check" [id]="'btncheck2'+employee.id + view" formControlName="active" autocomplete="off">
+        <label class="btn btn-outline-primary" [for]="'btncheck2'+employee.id + view">Active</label>
       </div>
     </div>
     
