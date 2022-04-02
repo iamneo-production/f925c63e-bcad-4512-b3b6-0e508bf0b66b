@@ -5,3 +5,5 @@ export enum roles {
 
 export const BASE_URL =
   'https://8080-dbcebacafbefccbefceeaecbbfabeaecfaaccbd.examlyiopb.examly.io';
+
+// export const BASE_URL = 'http://localhost:8080';
